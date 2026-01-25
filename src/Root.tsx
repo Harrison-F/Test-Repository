@@ -1,6 +1,7 @@
 import { Composition } from "remotion";
 import { HelloWorld } from "./HelloWorld";
 import { GalleryShowcase } from "./GalleryShowcase";
+import { FreedomLabIntro } from "./FreedomLabIntro";
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -30,6 +31,16 @@ export const RemotionRoot: React.FC = () => {
         defaultProps={{
           galleryName: "Fat Cat Gallery",
         }}
+      />
+
+      {/* Freedom Lab NYC intro - retro pixel style */}
+      <Composition
+        id="FreedomLabIntro"
+        component={FreedomLabIntro}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );
