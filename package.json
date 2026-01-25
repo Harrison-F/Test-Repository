@@ -1,0 +1,31 @@
+{
+  "name": "test-repository",
+  "version": "1.0.0",
+  "description": "A polished and sleek website for Fat Cat Gallery, showcasing high-end art collections.",
+  "main": "index.js",
+  "scripts": {
+    "studio": "remotion studio",
+    "render": "remotion render",
+    "render:hello": "remotion render HelloWorld out/hello-world.mp4",
+    "render:gallery": "remotion render GalleryShowcase out/gallery-showcase.mp4",
+    "upgrade": "remotion upgrade",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://local_proxy@127.0.0.1:32937/git/Harrison-F/Test-Repository"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@remotion/cli": "^4.0.409",
+    "@remotion/player": "^4.0.409",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "remotion": "^4.0.409",
+    "typescript": "^5.9.3"
+  }
+}
