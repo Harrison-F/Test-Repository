@@ -1,0 +1,42 @@
+name: Render Remotion Video
+
+on:
+  workflow_dispatch:
+    inputs:
+      composition:
+        description: 'Composition to render'
+        required: true
+        default: 'FreedomLabIntro'
+        type: choice
+        options:
+          - FreedomLabIntro
+          - HelloWorld
+          - GalleryShowcase
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chrome
+        uses: browser-actions/setup-chrome@latest
+
+      - name: Render video
+        run: npx remotion render ${{ github.event.inputs.composition }} out/${{ github.event.inputs.composition }}.mp4
+
+      - name: Upload video artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.composition }}-video
+          path: out/${{ github.event.inputs.composition }}.mp4
+          retention-days: 7
