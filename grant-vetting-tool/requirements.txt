@@ -14,8 +14,7 @@ aiohttp==3.9.1
 beautifulsoup4==4.12.2
 lxml==4.9.3
 
-# Nostr protocol
-pynostr==0.6.2
+# Nostr protocol (websocket only - simpler)
 websocket-client==1.7.0
 
 # Async support
@@ -38,9 +37,3 @@ orjson==3.9.10
 
 # URL parsing
 tldextract==5.1.1
-
-# Rate limiting
-ratelimit==2.2.1
-
-# For screenshots/archiving (optional)
-# playwright==1.40.0
