@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Edit {{ applicant.name }} - Grant Vetting Tool{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Edit Applicant</h1>
+</div>
+
+<form method="post" class="form">
+    <div class="form-section">
+        <h2>Basic Information</h2>
+
+        <div class="form-group">
+            <label for="name">Full Name *</label>
+            <input type="text" id="name" name="name" required value="{{ applicant.name }}">
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" value="{{ applicant.email or '' }}">
+            </div>
+
+            <div class="form-group">
+                <label for="organization">Organization</label>
+                <input type="text" id="organization" name="organization" value="{{ applicant.organization or '' }}">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="country">Country</label>
+            <input type="text" id="country" name="country" value="{{ applicant.country or '' }}">
+        </div>
+
+        <div class="form-group">
+            <label for="notes">Notes</label>
+            <textarea id="notes" name="notes" rows="3">{{ applicant.notes or '' }}</textarea>
+        </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a href="{{ url_for('view_applicant', applicant_id=applicant.id) }}" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+{% endblock %}

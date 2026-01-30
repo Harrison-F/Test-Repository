@@ -1,0 +1,46 @@
+# Flask web framework
+flask==3.0.0
+flask-sqlalchemy==3.1.1
+
+# Database
+sqlalchemy==2.0.23
+
+# HTTP requests
+requests==2.31.0
+httpx==0.25.2
+aiohttp==3.9.1
+
+# Web scraping
+beautifulsoup4==4.12.2
+lxml==4.9.3
+
+# Nostr protocol
+pynostr==0.6.2
+websocket-client==1.7.0
+
+# Async support
+asyncio-throttle==1.0.2
+
+# Date/time handling
+python-dateutil==2.8.2
+
+# Text processing
+regex==2023.10.3
+
+# Environment variables
+python-dotenv==1.0.0
+
+# For Apify integration
+apify-client==1.6.0
+
+# JSON handling
+orjson==3.9.10
+
+# URL parsing
+tldextract==5.1.1
+
+# Rate limiting
+ratelimit==2.2.1
+
+# For screenshots/archiving (optional)
+# playwright==1.40.0

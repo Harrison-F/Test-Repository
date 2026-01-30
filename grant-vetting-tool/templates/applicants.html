@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+
+{% block title %}Applicants - Grant Vetting Tool{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Applicants</h1>
+    <a href="{{ url_for('new_applicant') }}" class="btn btn-primary">Add Applicant</a>
+</div>
+
+<div class="filters">
+    <form method="get" class="filter-form">
+        <div class="filter-group">
+            <label for="search">Search</label>
+            <input type="text" id="search" name="search" value="{{ search or '' }}" placeholder="Name, email, or organization">
+        </div>
+        <div class="filter-group">
+            <label for="status">Status</label>
+            <select id="status" name="status">
+                <option value="">All Statuses</option>
+                <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="in_progress" {% if status_filter == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="needs_review" {% if status_filter == 'needs_review' %}selected{% endif %}>Needs Review</option>
+                <option value="passed" {% if status_filter == 'passed' %}selected{% endif %}>Passed</option>
+                <option value="failed" {% if status_filter == 'failed' %}selected{% endif %}>Failed</option>
+            </select>
+        </div>
+        <div class="filter-group">
+            <label for="risk_level">Risk Level</label>
+            <select id="risk_level" name="risk_level">
+                <option value="">All Risk Levels</option>
+                <option value="low" {% if risk_filter == 'low' %}selected{% endif %}>Low</option>
+                <option value="medium" {% if risk_filter == 'medium' %}selected{% endif %}>Medium</option>
+                <option value="high" {% if risk_filter == 'high' %}selected{% endif %}>High</option>
+                <option value="critical" {% if risk_filter == 'critical' %}selected{% endif %}>Critical</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-secondary">Filter</button>
+        <a href="{{ url_for('list_applicants') }}" class="btn btn-link">Clear</a>
+    </form>
+</div>
+
+{% if applicants %}
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Organization</th>
+                <th>Country</th>
+                <th>Status</th>
+                <th>Risk Level</th>
+                <th>Flags</th>
+                <th>Created</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for applicant in applicants %}
+            <tr>
+                <td>
+                    <a href="{{ url_for('view_applicant', applicant_id=applicant.id) }}">
+                        {{ applicant.name }}
+                    </a>
+                </td>
+                <td>{{ applicant.organization or '-' }}</td>
+                <td>{{ applicant.country or '-' }}</td>
+                <td>
+                    <span class="badge badge-status-{{ applicant.status }}">
+                        {{ applicant.status|replace('_', ' ')|title }}
+                    </span>
+                </td>
+                <td>
+                    {% if applicant.risk_level %}
+                        <span class="badge badge-{{ applicant.risk_level }}">
+                            {{ applicant.risk_level|upper }}
+                        </span>
+                    {% else %}
+                        <span class="badge badge-neutral">Not Assessed</span>
+                    {% endif %}
+                </td>
+                <td>{{ applicant.flags|length }}</td>
+                <td>{{ applicant.created_at.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    <div class="action-group">
+                        <a href="{{ url_for('view_applicant', applicant_id=applicant.id) }}" class="btn btn-sm">View</a>
+                        <form action="{{ url_for('full_vet', applicant_id=applicant.id) }}" method="post" class="inline-form">
+                            <button type="submit" class="btn btn-sm btn-primary">Vet</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    {% if pagination.pages > 1 %}
+    <div class="pagination">
+        {% if pagination.has_prev %}
+            <a href="{{ url_for('list_applicants', page=pagination.prev_num, status=status_filter, risk_level=risk_filter, search=search) }}" class="btn btn-sm">&laquo; Previous</a>
+        {% endif %}
+
+        <span class="page-info">Page {{ pagination.page }} of {{ pagination.pages }}</span>
+
+        {% if pagination.has_next %}
+            <a href="{{ url_for('list_applicants', page=pagination.next_num, status=status_filter, risk_level=risk_filter, search=search) }}" class="btn btn-sm">Next &raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+{% else %}
+    <div class="empty-state">
+        <p>No applicants found.</p>
+        <a href="{{ url_for('new_applicant') }}" class="btn btn-primary">Add Your First Applicant</a>
+    </div>
+{% endif %}
+{% endblock %}

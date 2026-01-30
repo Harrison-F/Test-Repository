@@ -1,0 +1,266 @@
+{% extends "base.html" %}
+
+{% block title %}Vetting Report - {{ applicant.name }}{% endblock %}
+
+{% block content %}
+<div class="report">
+    <div class="report-header">
+        <h1>Vetting Report</h1>
+        <p class="report-subtitle">{{ applicant.name }}</p>
+        <p class="report-date">Generated: {{ report.generated_at }}</p>
+    </div>
+
+    <div class="report-actions no-print">
+        <button onclick="window.print()" class="btn btn-primary">Print Report</button>
+        <a href="{{ url_for('export_report_json', applicant_id=applicant.id) }}" class="btn btn-secondary">Export JSON</a>
+        <a href="{{ url_for('view_applicant', applicant_id=applicant.id) }}" class="btn btn-secondary">Back to Applicant</a>
+    </div>
+
+    <div class="report-section">
+        <h2>Executive Summary</h2>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <span class="label">Status</span>
+                <span class="value badge badge-status-{{ applicant.status }}">
+                    {{ applicant.status|replace('_', ' ')|title }}
+                </span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Risk Level</span>
+                <span class="value badge badge-{{ applicant.risk_level or 'neutral' }}">
+                    {{ (applicant.risk_level or 'Not Assessed')|upper }}
+                </span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Total Flags</span>
+                <span class="value">{{ report.flags|length }}</span>
+            </div>
+            <div class="summary-item">
+                <span class="label">Content Items Analyzed</span>
+                <span class="value">{{ report.content_summary.total_items }}</span>
+            </div>
+        </div>
+
+        {% if report.sanctions_check and report.sanctions_check.has_matches %}
+        <div class="alert alert-danger">
+            <strong>SANCTIONS ALERT:</strong> Potential match(es) found in OFAC sanctions list.
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="report-section">
+        <h2>Applicant Information</h2>
+        <table class="report-table">
+            <tr>
+                <th>Full Name</th>
+                <td>{{ applicant.name }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ applicant.email or 'Not provided' }}</td>
+            </tr>
+            <tr>
+                <th>Organization</th>
+                <td>{{ applicant.organization or 'Not provided' }}</td>
+            </tr>
+            <tr>
+                <th>Country</th>
+                <td>{{ applicant.country or 'Not provided' }}</td>
+            </tr>
+            <tr>
+                <th>Application Date</th>
+                <td>{{ applicant.created_at.strftime('%Y-%m-%d') }}</td>
+            </tr>
+            {% if applicant.vetted_at %}
+            <tr>
+                <th>Vetting Completed</th>
+                <td>{{ applicant.vetted_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endif %}
+        </table>
+    </div>
+
+    <div class="report-section">
+        <h2>Social Media Profiles</h2>
+        {% if report.profiles %}
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>Username</th>
+                    <th>Discovery Method</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for profile in report.profiles %}
+                <tr>
+                    <td>{{ profile.platform|title }}</td>
+                    <td>{{ profile.username or profile.url or 'N/A' }}</td>
+                    <td>{{ profile.discovery_method }}</td>
+                    <td>{{ profile.scrape_status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No social media profiles on record.</p>
+        {% endif %}
+    </div>
+
+    {% if report.sanctions_check %}
+    <div class="report-section">
+        <h2>Sanctions Check</h2>
+        <table class="report-table">
+            <tr>
+                <th>Search Name</th>
+                <td>{{ report.sanctions_check.search_name }}</td>
+            </tr>
+            <tr>
+                <th>Search Country</th>
+                <td>{{ report.sanctions_check.search_country or 'N/A' }}</td>
+            </tr>
+            <tr>
+                <th>Check Date</th>
+                <td>{{ report.sanctions_check.checked_at }}</td>
+            </tr>
+            <tr>
+                <th>Result</th>
+                <td>
+                    {% if report.sanctions_check.has_matches %}
+                        <span class="badge badge-critical">MATCHES FOUND</span>
+                    {% else %}
+                        <span class="badge badge-low">No Matches</span>
+                    {% endif %}
+                </td>
+            </tr>
+        </table>
+
+        {% if report.sanctions_check.has_matches and report.sanctions_check.matches %}
+        <h3>Potential Matches</h3>
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Match Score</th>
+                    <th>Type</th>
+                    <th>Programs</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for match in report.sanctions_check.matches %}
+                <tr>
+                    <td>{{ match.name }}</td>
+                    <td>{{ match.match_score }}%</td>
+                    <td>{{ match.sdn_type }}</td>
+                    <td>{{ match.programs|join(', ') }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="report-section">
+        <h2>Flags and Concerns</h2>
+        {% if report.flags %}
+        <table class="report-table flags-table">
+            <thead>
+                <tr>
+                    <th>Severity</th>
+                    <th>Category</th>
+                    <th>Title</th>
+                    <th>Review Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flag in report.flags|sort(attribute='severity', reverse=True) %}
+                <tr class="flag-row-{{ flag.severity }}">
+                    <td><span class="badge badge-{{ flag.severity }}">{{ flag.severity|upper }}</span></td>
+                    <td>{{ flag.category|replace('_', ' ')|title }}</td>
+                    <td>{{ flag.title }}</td>
+                    <td>{{ flag.review_status }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <h3>Flag Details</h3>
+        {% for flag in report.flags %}
+        <div class="flag-detail">
+            <h4>
+                <span class="badge badge-{{ flag.severity }}">{{ flag.severity|upper }}</span>
+                {{ flag.title }}
+            </h4>
+            <p><strong>Category:</strong> {{ flag.category|replace('_', ' ')|title }}</p>
+            <p><strong>Description:</strong> {{ flag.description }}</p>
+            {% if flag.evidence_snippet %}
+            <p><strong>Evidence:</strong></p>
+            <blockquote>{{ flag.evidence_snippet }}</blockquote>
+            {% endif %}
+            {% if flag.matched_keywords %}
+            <p><strong>Matched Keywords:</strong> {{ flag.matched_keywords|join(', ') }}</p>
+            {% endif %}
+            {% if flag.content_url %}
+            <p><strong>Source:</strong> <a href="{{ flag.content_url }}">{{ flag.content_url }}</a></p>
+            {% endif %}
+            {% if flag.review_notes %}
+            <p><strong>Review Notes:</strong> {{ flag.review_notes }}</p>
+            {% endif %}
+        </div>
+        {% endfor %}
+        {% else %}
+        <p class="no-flags">No flags or concerns were identified during the vetting process.</p>
+        {% endif %}
+    </div>
+
+    <div class="report-section">
+        <h2>Content Analysis Summary</h2>
+        <table class="report-table">
+            <tr>
+                <th>Total Content Items</th>
+                <td>{{ report.content_summary.total_items }}</td>
+            </tr>
+            {% for platform, count in report.content_summary.by_platform.items() %}
+            <tr>
+                <th>{{ platform|title }}</th>
+                <td>{{ count }} items</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="report-section">
+        <h2>Recommendation</h2>
+        <div class="recommendation">
+            {% if applicant.status == 'passed' %}
+                <span class="badge badge-low large">APPROVED</span>
+                <p>Based on the vetting analysis, this applicant meets the guidelines requirements.</p>
+            {% elif applicant.status == 'failed' %}
+                <span class="badge badge-critical large">NOT APPROVED</span>
+                <p>Based on the vetting analysis, this applicant does not meet the guidelines requirements.</p>
+            {% else %}
+                <span class="badge badge-medium large">REQUIRES MANUAL REVIEW</span>
+                <p>This applicant requires additional manual review before a final decision can be made.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="report-footer">
+        <p>This report was automatically generated by the Grant Applicant Vetting Tool.</p>
+        <p>All findings should be verified by a human reviewer before making final decisions.</p>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    @media print {
+        .no-print { display: none !important; }
+        .navbar { display: none !important; }
+        .footer { display: none !important; }
+        .report { padding: 0; }
+    }
+</style>
+{% endblock %}

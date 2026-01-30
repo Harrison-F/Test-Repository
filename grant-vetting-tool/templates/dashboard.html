@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Grant Vetting Tool{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Dashboard</h1>
+
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-value">{{ total_applicants }}</div>
+            <div class="stat-label">Total Applicants</div>
+        </div>
+        <div class="stat-card stat-pending">
+            <div class="stat-value">{{ pending_applicants }}</div>
+            <div class="stat-label">Pending</div>
+        </div>
+        <div class="stat-card stat-progress">
+            <div class="stat-value">{{ in_progress }}</div>
+            <div class="stat-label">In Progress</div>
+        </div>
+        <div class="stat-card stat-review">
+            <div class="stat-value">{{ needs_review }}</div>
+            <div class="stat-label">Needs Review</div>
+        </div>
+        <div class="stat-card stat-passed">
+            <div class="stat-value">{{ passed }}</div>
+            <div class="stat-label">Passed</div>
+        </div>
+        <div class="stat-card stat-failed">
+            <div class="stat-value">{{ failed }}</div>
+            <div class="stat-label">Failed</div>
+        </div>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="dashboard-section">
+            <h2>High Risk Applicants</h2>
+            {% if high_risk %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Risk Level</th>
+                            <th>Status</th>
+                            <th>Flags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for applicant in high_risk %}
+                        <tr onclick="window.location='{{ url_for('view_applicant', applicant_id=applicant.id) }}'">
+                            <td>{{ applicant.name }}</td>
+                            <td>
+                                <span class="badge badge-{{ applicant.risk_level }}">
+                                    {{ applicant.risk_level|upper }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-status-{{ applicant.status }}">
+                                    {{ applicant.status|replace('_', ' ')|title }}
+                                </span>
+                            </td>
+                            <td>{{ applicant.flags|length }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="empty-state">No high-risk applicants found.</p>
+            {% endif %}
+        </div>
+
+        <div class="dashboard-section">
+            <h2>Recent Applicants</h2>
+            {% if recent_applicants %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for applicant in recent_applicants %}
+                        <tr onclick="window.location='{{ url_for('view_applicant', applicant_id=applicant.id) }}'">
+                            <td>{{ applicant.name }}</td>
+                            <td>
+                                <span class="badge badge-status-{{ applicant.status }}">
+                                    {{ applicant.status|replace('_', ' ')|title }}
+                                </span>
+                            </td>
+                            <td>{{ applicant.created_at.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p class="empty-state">No applicants yet. <a href="{{ url_for('new_applicant') }}">Add your first applicant</a>.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="quick-actions">
+        <h2>Quick Actions</h2>
+        <div class="action-buttons">
+            <a href="{{ url_for('new_applicant') }}" class="btn btn-primary">Add New Applicant</a>
+            <a href="{{ url_for('list_applicants', status='pending') }}" class="btn btn-secondary">View Pending</a>
+            <a href="{{ url_for('list_applicants', status='needs_review') }}" class="btn btn-warning">View Needs Review</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

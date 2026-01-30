@@ -1,0 +1,292 @@
+{% extends "base.html" %}
+
+{% block title %}{{ applicant.name }} - Grant Vetting Tool{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="header-content">
+        <h1>{{ applicant.name }}</h1>
+        <div class="header-badges">
+            <span class="badge badge-status-{{ applicant.status }}">
+                {{ applicant.status|replace('_', ' ')|title }}
+            </span>
+            {% if applicant.risk_level %}
+                <span class="badge badge-{{ applicant.risk_level }}">
+                    Risk: {{ applicant.risk_level|upper }}
+                </span>
+            {% endif %}
+        </div>
+    </div>
+    <div class="header-actions">
+        <a href="{{ url_for('edit_applicant', applicant_id=applicant.id) }}" class="btn btn-secondary">Edit</a>
+        <a href="{{ url_for('generate_report', applicant_id=applicant.id) }}" class="btn btn-secondary">Report</a>
+    </div>
+</div>
+
+<div class="applicant-detail">
+    <!-- Basic Info Card -->
+    <div class="detail-card">
+        <h2>Basic Information</h2>
+        <dl class="detail-list">
+            <dt>Email</dt>
+            <dd>{{ applicant.email or 'Not provided' }}</dd>
+
+            <dt>Organization</dt>
+            <dd>{{ applicant.organization or 'Not provided' }}</dd>
+
+            <dt>Country</dt>
+            <dd>
+                {{ applicant.country or 'Not provided' }}
+                {% if applicant.country %}
+                    <!-- Country classification would be shown here -->
+                {% endif %}
+            </dd>
+
+            <dt>Created</dt>
+            <dd>{{ applicant.created_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+
+            {% if applicant.vetted_at %}
+            <dt>Vetted</dt>
+            <dd>{{ applicant.vetted_at.strftime('%Y-%m-%d %H:%M') }}</dd>
+            {% endif %}
+        </dl>
+
+        {% if applicant.notes %}
+        <div class="notes-section">
+            <h3>Notes</h3>
+            <p>{{ applicant.notes }}</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Actions Card -->
+    <div class="detail-card">
+        <h2>Vetting Actions</h2>
+        <div class="action-buttons-vertical">
+            <form action="{{ url_for('full_vet', applicant_id=applicant.id) }}" method="post">
+                <button type="submit" class="btn btn-primary btn-full">Run Full Vetting</button>
+            </form>
+
+            <form action="{{ url_for('scrape_applicant', applicant_id=applicant.id) }}" method="post">
+                <button type="submit" class="btn btn-secondary btn-full">Scrape Profiles</button>
+            </form>
+
+            <form action="{{ url_for('analyze_applicant', applicant_id=applicant.id) }}" method="post">
+                <button type="submit" class="btn btn-secondary btn-full">Analyze Content</button>
+            </form>
+
+            <form action="{{ url_for('check_sanctions', applicant_id=applicant.id) }}" method="post">
+                <button type="submit" class="btn btn-secondary btn-full">Check Sanctions</button>
+            </form>
+        </div>
+
+        <hr>
+
+        <h3>Update Status</h3>
+        <form action="{{ url_for('update_status', applicant_id=applicant.id) }}" method="post" class="status-form">
+            <select name="status" class="form-control">
+                <option value="pending" {% if applicant.status == 'pending' %}selected{% endif %}>Pending</option>
+                <option value="in_progress" {% if applicant.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                <option value="needs_review" {% if applicant.status == 'needs_review' %}selected{% endif %}>Needs Review</option>
+                <option value="passed" {% if applicant.status == 'passed' %}selected{% endif %}>Passed</option>
+                <option value="failed" {% if applicant.status == 'failed' %}selected{% endif %}>Failed</option>
+            </select>
+            <button type="submit" class="btn btn-sm">Update</button>
+        </form>
+    </div>
+
+    <!-- Social Profiles Card -->
+    <div class="detail-card">
+        <h2>Social Profiles ({{ applicant.social_profiles|length }})</h2>
+        {% if applicant.social_profiles %}
+            <div class="profiles-list">
+                {% for profile in applicant.social_profiles %}
+                <div class="profile-item">
+                    <div class="profile-header">
+                        <span class="platform-badge platform-{{ profile.platform }}">
+                            {{ profile.platform|title }}
+                        </span>
+                        <span class="discovery-badge">{{ profile.discovery_method }}</span>
+                    </div>
+                    <div class="profile-info">
+                        <strong>{{ profile.username or profile.url or 'Unknown' }}</strong>
+                        {% if profile.display_name %}
+                            <span class="display-name">({{ profile.display_name }})</span>
+                        {% endif %}
+                    </div>
+                    {% if profile.bio %}
+                        <p class="profile-bio">{{ profile.bio[:200] }}{% if profile.bio|length > 200 %}...{% endif %}</p>
+                    {% endif %}
+                    <div class="profile-stats">
+                        {% if profile.followers_count %}
+                            <span>Followers: {{ profile.followers_count }}</span>
+                        {% endif %}
+                        {% if profile.posts_count %}
+                            <span>Posts: {{ profile.posts_count }}</span>
+                        {% endif %}
+                    </div>
+                    <div class="profile-status">
+                        Status: <span class="badge badge-status-{{ profile.scrape_status }}">{{ profile.scrape_status }}</span>
+                        {% if profile.last_scraped_at %}
+                            <small>Last scraped: {{ profile.last_scraped_at.strftime('%Y-%m-%d') }}</small>
+                        {% endif %}
+                    </div>
+                    {% if profile.scrape_error %}
+                        <div class="error-message">{{ profile.scrape_error }}</div>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">No social profiles added yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Sanctions Check Card -->
+    {% if applicant.sanctions_check %}
+    <div class="detail-card {% if applicant.sanctions_check.has_matches %}card-danger{% endif %}">
+        <h2>Sanctions Check</h2>
+        <dl class="detail-list">
+            <dt>Status</dt>
+            <dd>{{ applicant.sanctions_check.status }}</dd>
+
+            <dt>Checked</dt>
+            <dd>{{ applicant.sanctions_check.checked_at.strftime('%Y-%m-%d %H:%M') if applicant.sanctions_check.checked_at else 'Not checked' }}</dd>
+
+            <dt>Matches Found</dt>
+            <dd>
+                {% if applicant.sanctions_check.has_matches %}
+                    <span class="badge badge-critical">YES - {{ applicant.sanctions_check.matches|length }} potential match(es)</span>
+                {% else %}
+                    <span class="badge badge-low">No matches</span>
+                {% endif %}
+            </dd>
+        </dl>
+
+        {% if applicant.sanctions_check.has_matches %}
+            <div class="matches-list">
+                <h3>Potential Matches</h3>
+                {% for match in applicant.sanctions_check.matches %}
+                    <div class="match-item">
+                        <strong>{{ match.name }}</strong>
+                        <span class="match-score">Score: {{ match.match_score }}%</span>
+                        {% if match.programs %}
+                            <div class="match-programs">Programs: {{ match.programs|join(', ') }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <a href="https://sanctionssearch.ofac.treas.gov/?name={{ applicant.name|urlencode }}" target="_blank" class="btn btn-sm btn-secondary">
+            Verify on OFAC Website
+        </a>
+    </div>
+    {% endif %}
+
+    <!-- Flags Card -->
+    <div class="detail-card full-width">
+        <h2>Flags ({{ applicant.flags|length }})</h2>
+        {% if applicant.flags %}
+            <div class="flags-container">
+                {% for category, flags in flags_by_category.items() %}
+                <div class="flag-category">
+                    <h3>{{ category|replace('_', ' ')|title }} ({{ flags|length }})</h3>
+                    {% for flag in flags %}
+                    <div class="flag-item flag-{{ flag.severity }}">
+                        <div class="flag-header">
+                            <span class="badge badge-{{ flag.severity }}">{{ flag.severity|upper }}</span>
+                            <strong>{{ flag.title }}</strong>
+                            <span class="flag-status badge badge-status-{{ flag.review_status }}">
+                                {{ flag.review_status }}
+                            </span>
+                        </div>
+                        <p class="flag-description">{{ flag.description }}</p>
+                        {% if flag.evidence_snippet %}
+                        <div class="evidence-snippet">
+                            <strong>Evidence:</strong>
+                            <blockquote>{{ flag.evidence_snippet }}</blockquote>
+                        </div>
+                        {% endif %}
+                        {% if flag.matched_keywords %}
+                        <div class="matched-keywords">
+                            <strong>Keywords:</strong>
+                            {% for kw in flag.matched_keywords %}
+                                <span class="keyword-tag">{{ kw }}</span>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <form action="{{ url_for('review_flag', flag_id=flag.id) }}" method="post" class="flag-review-form">
+                            <select name="review_status" class="form-control-sm">
+                                <option value="pending" {% if flag.review_status == 'pending' %}selected{% endif %}>Pending</option>
+                                <option value="confirmed" {% if flag.review_status == 'confirmed' %}selected{% endif %}>Confirmed</option>
+                                <option value="dismissed" {% if flag.review_status == 'dismissed' %}selected{% endif %}>Dismissed</option>
+                            </select>
+                            <input type="text" name="review_notes" placeholder="Review notes..." class="form-control-sm">
+                            <button type="submit" class="btn btn-sm">Update</button>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">No flags raised for this applicant.</p>
+        {% endif %}
+    </div>
+
+    <!-- Content Items Card -->
+    <div class="detail-card full-width">
+        <h2>Scraped Content ({{ applicant.content_items|length }})</h2>
+        {% if applicant.content_items %}
+            <div class="content-tabs">
+                {% for platform, items in content_by_platform.items() %}
+                <div class="content-tab">
+                    <h3>{{ platform|title }} ({{ items|length }})</h3>
+                    <div class="content-list">
+                        {% for item in items[:20] %}
+                        <div class="content-item">
+                            <div class="content-meta">
+                                <span class="content-type">{{ item.content_type }}</span>
+                                {% if item.published_at %}
+                                    <span class="content-date">{{ item.published_at.strftime('%Y-%m-%d') }}</span>
+                                {% endif %}
+                                {% if item.url %}
+                                    <a href="{{ item.url }}" target="_blank" class="content-link">View Original</a>
+                                {% endif %}
+                            </div>
+                            <div class="content-text">
+                                {{ item.text_content[:500] }}{% if item.text_content|length > 500 %}...{% endif %}
+                            </div>
+                            {% if item.flags %}
+                            <div class="content-flags">
+                                {% for flag in item.flags %}
+                                    <span class="badge badge-{{ flag.severity }}">{{ flag.category }}</span>
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                        {% if items|length > 20 %}
+                        <p class="more-content">And {{ items|length - 20 }} more items...</p>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p class="empty-state">No content scraped yet. Click "Scrape Profiles" to fetch content.</p>
+        {% endif %}
+    </div>
+
+    <!-- Danger Zone -->
+    <div class="detail-card danger-zone">
+        <h2>Danger Zone</h2>
+        <form action="{{ url_for('delete_applicant', applicant_id=applicant.id) }}" method="post"
+              onsubmit="return confirm('Are you sure you want to delete this applicant? This cannot be undone.');">
+            <button type="submit" class="btn btn-danger">Delete Applicant</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
