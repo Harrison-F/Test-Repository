@@ -15,6 +15,7 @@
 - Accept Lightning Network payments (instant, low fees)
 - Automatic conversion to Liquid sidechain via Boltz plugin
 - Custom store, donation page, and point-of-sale system
+- TEST1234
 
 **Key Benefits:**
 - **Non-custodial:** You control your funds
