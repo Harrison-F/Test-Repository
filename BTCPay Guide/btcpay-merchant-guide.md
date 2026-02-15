@@ -55,6 +55,8 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 1.3 Access BTCPay Dashboard
 
+![[btcpay-dashboard-overview.jpg]]
+
 1. Open browser: `http://YOUR-SERVER-IP`
 2. Create admin account
 3. You're now in the BTCPay dashboard
@@ -82,6 +84,8 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
    - **Address Type:** Native SegWit (bc1... addresses)
 
 ### 2.3 Connect to BTCPay
+
+![[btcpay-wallet-setup-xpub.jpg]]
 
 1. In BTCPay: **Stores → Settings → Wallet**
 2. Click **Setup wallet**
@@ -119,15 +123,29 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
    - Display amounts in Satoshis (optional)
    - Enable "Pay in wallet" button
 
+### 3.3 Test Invoice
+
+![[btcpay-invoice-example.jpg]]
+
+1. **Stores → Invoices → Create**
+2. Enter amount and description
+3. Share invoice URL or QR code with customer
+4. Customer pays via Bitcoin wallet
+
 ---
 
 ## Step 4: Lightning Network Setup
 
 ### 4.1 Enable Lightning Node
 
-> **Screenshot needed:** BTCPay Lightning settings page showing "Setup Lightning node" button and LND/CLN selection.
-
 1. **Stores → Settings → Lightning**
+2. Click **Setup Lightning node**
+3. Choose implementation:
+   - **LND** (most common, recommended)
+   - **Core Lightning (CLN)**
+4. BTCPay creates and manages the node automatically
+
+> **Screenshot needed:** Lightning settings page showing LND/CLN selection
 2. Click **Setup Lightning node**
 3. Choose implementation:
    - **LND** (most common, recommended)
