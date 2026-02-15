@@ -1,0 +1,199 @@
+{
+  "main": {
+    "id": "ce47b0a50913489f",
+    "type": "split",
+    "children": [
+      {
+        "id": "83cbcc7005add192",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "56b3107cd705286a",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "BTCPay_Lesson_Plan.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "BTCPay_Lesson_Plan"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "caef4012b3d3eec4",
+    "type": "split",
+    "children": [
+      {
+        "id": "55bd95eb1fb9f29c",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "c0c42c59f2041768",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "cb742d89eb1c33ee",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "c73b7b6bcd7d665a",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "de4afbe98c3bfa4a",
+    "type": "split",
+    "children": [
+      {
+        "id": "1d266bdd791ccd42",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "515330581bd4fe1c",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "BTCPay Guide/images/gallery-museum.webp",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for gallery-museum"
+            }
+          },
+          {
+            "id": "d478d58e8b2356a9",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "BTCPay Guide/images/gallery-museum.webp",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from gallery-museum"
+            }
+          },
+          {
+            "id": "39d3cea572980d42",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "3614cd0631e9cff9",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "62999c2a1a3b4d20",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "BTCPay Guide/images/gallery-museum.webp",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of gallery-museum"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false,
+      "obsidian-git:Open Git source control": false
+    }
+  },
+  "active": "56b3107cd705286a",
+  "lastOpenFiles": [
+    "BTCPay Guide/images/gallery-museum.webp",
+    "BTCPay Guide/images/art-gallery-interior-stockcake.webp",
+    "BTCPay Guide/btcpay-guide/wallet-details-xpub.jpg",
+    "BTCPay Guide/btcpay-guide/lunanode-launcher.jpg",
+    "BTCPay Guide/btcpay-guide/lightning-setup.jpg",
+    "BTCPay Guide/btcpay-guide/btcpay-merchant-guide.md",
+    "BTCPay Guide/btcpay-guide/btcpay-create-store.jpg",
+    "BTCPay Guide/btcpay-guide/boltz-plugin.jpg",
+    "BTCPay_Lesson_Plan.md"
+  ]
+}
