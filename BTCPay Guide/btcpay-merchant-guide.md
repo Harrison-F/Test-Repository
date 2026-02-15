@@ -43,13 +43,15 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 1.2 Deploy BTCPay Server
 
-![[lunanode-launcher.jpg]]
+![[lunanode-dashboard-api.jpg]]
 
 1. Go to: [launchbtcpay.lunanode.com](https://launchbtcpay.lunanode.com)
 2. Create API keys in your LunaNode dashboard
 3. Enter **API ID** and **API Key** in the launcher
 4. Click **Continue** — LunaNode deploys a pre-configured VM (~$15.80/month)
 5. Save the server IP address provided
+
+![[btcpay-server-deploying.jpg]]
 
 ### 1.3 Access BTCPay Dashboard
 
@@ -63,7 +65,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 2.1 Create Wallet
 
-![[bull-bitcoin-wallet.jpg]]
+![[bullbitcoin-wallet-home.jpg]]
 
 1. Download Bull Bitcoin wallet from [wallet.bullbitcoin.com](https://wallet.bullbitcoin.com)
 2. Sign up at [app.bullbitcoin.com](https://app.bullbitcoin.com/registration/850620951575217852985155561438083230402263)
@@ -97,7 +99,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 3.1 Basic Setup
 
-![[btcpay-create-store.jpg]]
+![[btcpay-store-create-form.jpg]]
 
 1. **Stores → Create Store**
 2. **Name:** Your business name
@@ -106,7 +108,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 3.2 Configure Checkout Experience
 
-![[btcpay-checkout-settings.jpg]]
+![[btcpay-create-store.jpg]]
 
 1. Go to **Checkout Experience**
 2. Set payment thresholds:
@@ -123,7 +125,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 4.1 Enable Lightning Node
 
-![[lightning-setup.jpg]]
+![[btcpay-lightning-setup.jpg]]
 
 1. **Stores → Settings → Lightning**
 2. Click **Setup Lightning node**
@@ -162,7 +164,7 @@ Lightning requires **inbound liquidity** to receive payments:
 
 ### 5.2 Install & Configure
 
-![[boltz-plugin.jpg]]
+![[btcpay-boltz-config.jpg]]
 
 1. **Server Settings → Plugins**
 2. Search **"Boltz"** and install **Boltz Client Plugin**
