@@ -11,14 +11,12 @@
             "id": "56b3107cd705286a",
             "type": "leaf",
             "state": {
-              "type": "markdown",
+              "type": "image",
               "state": {
-                "file": "BTCPay Guide/btcpay-merchant-guide.md",
-                "mode": "source",
-                "source": false
+                "file": "BTCPay Guide/lightning-setup.jpg"
               },
-              "icon": "lucide-file",
-              "title": "btcpay-merchant-guide"
+              "icon": "lucide-image",
+              "title": "lightning-setup"
             }
           }
         ]
@@ -196,19 +194,20 @@
   },
   "active": "56b3107cd705286a",
   "lastOpenFiles": [
-    "BTCPay Guide/btcpay-create-store.jpg",
-    "BTCPay Guide/boltz-plugin.jpg",
-    "BTCPay Guide/btcpay-merchant-guide.md",
-    "BTCPay Guide/lightning-setup.jpg",
+    "BTCPay Guide/lunanode-dashboard-api.jpg",
+    "BTCPay Guide/bullbitcoin-wallet-home.jpg",
+    "BTCPay Guide/btcpay-store-create-form.jpg",
+    "BTCPay Guide/btcpay-server-deploying.jpg",
+    "BTCPay Guide/btcpay-lightning-setup.jpg",
+    "BTCPay Guide/btcpay-boltz-config.jpg",
     "BTCPay Guide/lunanode-launcher.jpg",
     "BTCPay Guide/wallet-details-xpub.jpg",
+    "BTCPay Guide/btcpay-merchant-guide.md",
+    "BTCPay Guide/btcpay-create-store.jpg",
+    "BTCPay Guide/boltz-plugin.jpg",
+    "BTCPay Guide/lightning-setup.jpg",
     "BTCPay_Lesson_Plan.md",
-    "Screenshot 2026-02-15 at 4.49.24 PM.png",
-    "BTCPay Guide/btcpay-guide/boltz-plugin.jpg",
-    "BTCPay Guide/btcpay-guide/btcpay-create-store.jpg",
     "BTCPay Guide/btcpay-guide/btcpay-merchant-guide.md",
-    "BTCPay Guide/btcpay-guide/lightning-setup.jpg",
-    "BTCPay Guide/btcpay-guide/lunanode-launcher.jpg",
     "BTCPay Guide/README.md"
   ]
 }
