@@ -125,7 +125,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 4.1 Enable Lightning Node
 
-![[btcpay-lightning-setup.jpg]]
+> **Screenshot needed:** BTCPay Lightning settings page showing "Setup Lightning node" button and LND/CLN selection.
 
 1. **Stores → Settings → Lightning**
 2. Click **Setup Lightning node**
