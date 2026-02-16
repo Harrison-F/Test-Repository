@@ -43,7 +43,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 1.2 Deploy BTCPay Server
 
-![LunaNode Dashboard](lunanode-dashboard-api.jpg)
+![LunaNode Dashboard](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/lunanode-dashboard-api.jpg)
 
 1. Go to: [launchbtcpay.lunanode.com](https://launchbtcpay.lunanode.com)
 2. Create API keys in your LunaNode dashboard
@@ -51,11 +51,11 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 4. Click **Continue** — LunaNode deploys a pre-configured VM (~$15.80/month)
 5. Save the server IP address provided
 
-![Server Deploying](btcpay-server-deploying.jpg)
+![Server Deploying](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/btcpay-server-deploying.jpg)
 
 ### 1.3 Access BTCPay Dashboard
 
-![BTCPay Dashboard](btcpay-dashboard-overview.jpg)
+![BTCPay Dashboard](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/btcpay-dashboard-overview.jpg)
 
 1. Open browser: `http://YOUR-SERVER-IP`
 2. Create admin account
@@ -67,7 +67,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 2.1 Create Wallet
 
-![Bull Bitcoin Wallet](bullbitcoin-wallet-home.jpg)
+![Bull Bitcoin Wallet](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/bullbitcoin-wallet-home.jpg)
 
 1. Download Bull Bitcoin wallet from [wallet.bullbitcoin.com](https://wallet.bullbitcoin.com)
 2. Sign up at [app.bullbitcoin.com](https://app.bullbitcoin.com/registration/850620951575217852985155561438083230402263)
@@ -75,7 +75,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 2.2 Get Extended Public Key (xpub)
 
-![Wallet xpub Settings](wallet-details-xpub.jpg)
+![Wallet xpub Settings](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/wallet-details-xpub.jpg)
 
 1. Go to **Wallet Settings** → **Advanced**
 2. Note:
@@ -85,7 +85,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 2.3 Connect to BTCPay
 
-![BTCPay Wallet Setup](btcpay-wallet-setup-xpub.jpg)
+![BTCPay Wallet Setup](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/btcpay-wallet-setup-xpub.jpg)
 
 1. In BTCPay: **Stores → Settings → Wallet**
 2. Click **Setup wallet**
@@ -103,7 +103,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 3.1 Basic Setup
 
-![Create Store Form](btcpay-store-create-form.jpg)
+![Create Store Form](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/btcpay-store-create-form.jpg)
 
 1. **Stores → Create Store**
 2. **Name:** Your business name
@@ -112,7 +112,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 3.2 Configure Checkout Experience
 
-![Checkout Settings](btcpay-create-store.jpg)
+![Checkout Settings](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/btcpay-create-store.jpg)
 
 1. Go to **Checkout Experience**
 2. Set payment thresholds:
@@ -125,7 +125,7 @@ This guide walks you through setting up a **self-hosted Bitcoin payment processo
 
 ### 3.3 Test Invoice
 
-![Sample Invoice](btcpay-invoice-example.jpg)
+![Sample Invoice](https://github.com/Harrison-F/Test-Repository/raw/main/BTCPay%20Guide/btcpay-invoice-example.jpg)
 
 1. **Stores → Invoices → Create**
 2. Enter amount and description
