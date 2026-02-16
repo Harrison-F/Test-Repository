@@ -177,7 +177,7 @@ Lightning requires **inbound liquidity** to receive payments:
 
 ### 5.2 Install & Configure
 
-> **Screenshot needed:** Boltz plugin settings showing automatic swap configuration
+![BTCPay Plugins Sidebar](https://raw.githubusercontent.com/Harrison-F/Test-Repository/main/BTCPay%20Guide/btcpay-plugins-sidebar.jpg)
 
 1. **Server Settings → Plugins**
 2. Search **"Boltz"** and install **Boltz Client Plugin**
@@ -224,6 +224,8 @@ When you receive a Lightning payment above your threshold:
 5. Bookmark the POS URL for retail use
 
 ### 6.4 Donation Page
+
+![BTCPay Donation Page](https://raw.githubusercontent.com/Harrison-F/Test-Repository/main/BTCPay%20Guide/btcpay-donation-page.jpg)
 
 1. **Apps → Crowdfund**
 2. Create campaign with goal (optional)
