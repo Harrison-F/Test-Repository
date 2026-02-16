@@ -16,7 +16,6 @@
 - Automatic conversion to Liquid sidechain via Boltz plugin
 - Custom store, donation page, and point-of-sale system
 - TEST1234
-![[Screenshot 2026-02-15 at 4.49.24 PM.png]]
 **Key Benefits:**
 - **Non-custodial:** You control your funds
 - **Privacy:** No KYC required
