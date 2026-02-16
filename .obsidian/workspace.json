@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "BTCPay_Lesson_Plan.md",
+                "file": "BTCPay Guide/btcpay-guide/btcpay-merchant-guide.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "BTCPay_Lesson_Plan"
+              "title": "btcpay-merchant-guide"
             }
           }
         ]
@@ -196,6 +196,7 @@
   },
   "active": "56b3107cd705286a",
   "lastOpenFiles": [
+    "BTCPay_Lesson_Plan.md",
     "BTCPay Guide/lightning-setup.jpg",
     "BTCPay Guide/btcpay-wallet-setup-xpub.jpg",
     "BTCPay Guide/btcpay-invoice-example.jpg",
@@ -206,9 +207,7 @@
     "BTCPay Guide/btcpay-server-deploying.jpg",
     "BTCPay Guide/btcpay-lightning-setup.jpg",
     "BTCPay Guide/btcpay-boltz-config.jpg",
-    "BTCPay Guide/lunanode-launcher.jpg",
     "BTCPay Guide/btcpay-merchant-guide.md",
-    "BTCPay_Lesson_Plan.md",
     "BTCPay Guide/btcpay-guide/btcpay-merchant-guide.md",
     "BTCPay Guide/README.md"
   ]
